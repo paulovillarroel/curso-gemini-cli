@@ -1,43 +1,54 @@
-# Astro Starter Kit: Minimal
+# Curso de Gemini CLI
 
-```sh
-npm create astro@latest -- --template minimal
+Curso gratuito y práctico para aprender a usar [Gemini CLI](https://geminicli.com/), la interfaz de línea de comandos de Google para interactuar con modelos Gemini directamente desde tu terminal.
+
+Un curso de [Hazla con Datos](https://hazlacondatos.com/).
+
+## Contenido
+
+El curso está organizado en 15 pasos:
+
+**Inicio**
+1. Introducción
+2. Requisitos
+3. Instalación
+4. Autenticación
+
+**Uso básico**
+5. Chat Básico
+6. Contexto y Archivos
+7. Automatización (Plan Mode y Subagents)
+8. Shell Integration
+9. Web Tools
+
+**Proyecto**
+10. Capstone Project
+
+**Avanzado**
+11. MCP (Model Context Protocol)
+12. Extensions
+13. Skills
+14. Persistent Memory
+15. Configuration
+
+## Tecnologías
+
+- [Astro](https://astro.build/) + MDX
+- [Tailwind CSS](https://tailwindcss.com/) v4
+- [Expressive Code](https://expressive-code.com/) para bloques de código
+- Desplegado en [GitHub Pages](https://paulovillarroel.github.io/curso-gemini-cli/)
+
+## Desarrollo local
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Autor
 
-## 🚀 Project Structure
+Creado por [Paulo Villarroel](https://github.com/paulovillarroel).
 
-Inside of your Astro project, you'll see the following folders and files:
+## Licencia
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Contenido bajo licencia libre. Comparte y aprende.
