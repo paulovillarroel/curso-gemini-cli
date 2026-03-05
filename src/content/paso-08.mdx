@@ -1,0 +1,43 @@
+import Callout from '../components/Callout.astro';
+
+Gemini CLI puede ejecutar comandos de sistema por ti o permitirte ejecutarlos directamente sin salir de la herramienta.
+
+### EJECUCIÓN DIRECTA CON `!`
+
+Usa el prefijo `!` seguido de un comando para ejecutarlo inmediatamente:
+
+```
+!ls -la
+```
+
+*(En Windows usa `!dir` en lugar de `!ls`)*
+
+La salida se imprime en terminal pero **no** se envía automáticamente al modelo.
+
+### SHELL MODE
+
+Escribe `!` y pulsa Enter (sin comando) para entrar en **Shell Mode**: una terminal interactiva dentro de Gemini CLI. Sal con `exit` o `Esc`.
+
+### AGENTE AUTÓNOMO
+
+También puedes pedirle a Gemini que ejecute comandos en lenguaje natural:
+
+> Crea un archivo llamado "hola.txt" que contenga el texto "Hola desde Gemini CLI".
+
+Gemini generará una llamada a `run_shell_command` o `write_file`. Por defecto, **cada comando requiere tu aprobación explícita** con opciones para permitir una vez, siempre, o denegar.
+
+### PROCESOS EN BACKGROUND
+
+Para tareas de larga duración (ej. servidores de desarrollo), usa el comando `/shells` para abrir un dashboard donde puedes ver los logs o detener procesos.
+
+### MODO SANDBOX
+
+Para máxima seguridad, ejecuta con `--sandbox` para correr comandos en un contenedor Docker aislado:
+
+```bash
+gemini --sandbox -y -p "analiza este código"
+```
+
+<Callout type="tip">
+Los comandos altamente interactivos (como vim) funcionan mejor con el prefijo `!` directo en lugar de dejar que el agente los ejecute.
+</Callout>

@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import MobileNav from '../components/MobileNav.astro';
+import Hero from '../components/Hero.astro';
+import ModuleSection from '../components/ModuleSection.astro';
+import Footer from '../components/Footer.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
+import NextSection from '../components/NextSection.astro';
+
+import Paso01 from '../content/paso-01.mdx';
+import Paso02 from '../content/paso-02.mdx';
+import Paso03 from '../content/paso-03.mdx';
+import Paso04 from '../content/paso-04.mdx';
+import Paso05 from '../content/paso-05.mdx';
+import Paso06 from '../content/paso-06.mdx';
+import Paso07 from '../content/paso-07.mdx';
+import Paso08 from '../content/paso-08.mdx';
+import Paso09 from '../content/paso-09.mdx';
+import Paso10 from '../content/paso-10.mdx';
+import Paso11 from '../content/paso-11.mdx';
+import Paso12 from '../content/paso-12.mdx';
+import Paso13 from '../content/paso-13.mdx';
+import Paso14 from '../content/paso-14.mdx';
+import Paso15 from '../content/paso-15.mdx';
+---
+
+<Layout title="Curso de Gemini CLI">
+  <Sidebar />
+  <MobileNav />
+
+  <main class="lg:ml-70 pt-14 lg:pt-0">
+    <Hero />
+
+    <ModuleSection id="paso-1" title="Introducción" number="01">
+      <Paso01 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-2" title="Requisitos" number="02" alternate>
+      <Paso02 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-3" title="Instalación" number="03">
+      <Paso03 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-4" title="Autenticación" number="04" alternate>
+      <Paso04 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-5" title="Chat Básico" number="05">
+      <Paso05 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-6" title="Contexto y Archivos" number="06" alternate>
+      <Paso06 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-7" title="Automatización" number="07">
+      <Paso07 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-8" title="Shell Integration" number="08" alternate>
+      <Paso08 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-9" title="Web Tools" number="09">
+      <Paso09 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-10" title="Capstone Project" number="10" alternate>
+      <Paso10 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-11" title="MCP" number="11">
+      <Paso11 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-12" title="Extensions" number="12" alternate>
+      <Paso12 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-13" title="Skills" number="13">
+      <Paso13 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-14" title="Persistent Memory" number="14" alternate>
+      <Paso14 />
+    </ModuleSection>
+
+    <ModuleSection id="paso-15" title="Configuration" number="15">
+      <Paso15 />
+    </ModuleSection>
+
+    <Footer />
+  </main>
+
+  <ScrollToTop />
+  <NextSection />
+</Layout>

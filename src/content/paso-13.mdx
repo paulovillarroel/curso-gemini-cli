@@ -1,0 +1,156 @@
+import Callout from '../components/Callout.astro';
+
+Las Agent Skills permiten extender Gemini CLI con experiencia especializada y flujos de trabajo procedimentales. Son parte del estándar abierto Agent Skills.
+
+### ¿CÓMO FUNCIONAN?
+
+1. Gemini CLI inyecta los nombres y descripciones de las Skills en el system prompt.
+2. Cuando el modelo identifica una tarea que coincide, invoca la herramienta `activate_skill`.
+3. Tú confirmas la activación en un prompt de consentimiento.
+4. El contenido del SKILL.md y acceso al directorio se pasan al agente.
+
+### UBICACIONES DE DESCUBRIMIENTO
+
+Las Skills se buscan en tres niveles (en orden de prioridad):
+
+1. **Proyecto:** `.gemini/skills/` o `.agents/skills/`
+2. **Usuario:** `~/.gemini/skills/` o `~/.agents/skills/`
+3. **Extensiones:** Skills incluidas en extensiones instaladas
+
+### CREAR UNA SKILL
+
+Hay dos formas de crear una Skill:
+
+**Opción 1: Usando el skill-creator integrado**
+
+Simplemente pídelo en el chat:
+
+> Crea una nueva skill llamada "code-reviewer"
+
+Gemini CLI generará automáticamente el directorio, el archivo `SKILL.md` con metadata, y las carpetas de soporte.
+
+**Opción 2: Creación manual**
+
+Crea el directorio y el archivo `SKILL.md` tú mismo.
+
+### ESTRUCTURA DE UNA SKILL
+
+```
+mi-skill/
+├── SKILL.md        (obligatorio)
+├── scripts/        (opcional — scripts ejecutables)
+├── references/     (opcional — documentación estática)
+└── assets/         (opcional — plantillas y recursos)
+```
+
+### FORMATO DE SKILL.MD
+
+El archivo combina frontmatter YAML con instrucciones en Markdown:
+
+```markdown
+---
+name: code-reviewer
+description: >
+  Usa esta skill para revisar código. Soporta
+  cambios locales y Pull Requests remotos.
+---
+# Code Reviewer Instructions
+
+Eres un experto revisor de código. Sigue este proceso:
+
+1. Analiza buscando bugs lógicos.
+2. Asegúrate de cumplir con las convenciones del proyecto.
+3. Busca vulnerabilidades de seguridad (OWASP Top 10).
+4. Sugiere mejoras de rendimiento si aplican.
+```
+
+**Campos del frontmatter:**
+* **`name`** — Identificador único (debe coincidir con el nombre del directorio)
+* **`description`** — Explica el propósito de la skill y cuándo Gemini debería activarla. Es clave para que el modelo la elija correctamente.
+
+**Cuerpo Markdown:** Instrucciones claras y accionables que guían el comportamiento del agente cuando la skill está activa. Mientras más específico y estructurado, mejor será el resultado.
+
+### EJERCICIO: CREAR UNA SKILL DE "CODE REVIEWER"
+
+1. Crea la estructura:
+```bash
+mkdir -p .gemini/skills/code-reviewer
+```
+
+2. Crea el archivo `SKILL.md`:
+```bash
+cat > .gemini/skills/code-reviewer/SKILL.md << 'EOF'
+---
+name: code-reviewer
+description: >
+  Experto en revisión de código. Actívala cuando
+  el usuario pida un code review o revisión de código.
+---
+# Code Reviewer Instructions
+
+Eres un experto revisor de código. Sigue este proceso:
+
+1. Analiza buscando bugs lógicos y edge cases.
+2. Verifica que se cumplan las convenciones del proyecto.
+3. Busca vulnerabilidades de seguridad.
+4. Evalúa la legibilidad y mantenibilidad.
+5. Presenta los hallazgos en una tabla con severidad (alta/media/baja).
+EOF
+```
+
+### GESTIONAR SKILLS
+
+**Desde una sesión interactiva:**
+* `/skills list` — Listar skills disponibles
+* `/skills reload` — Recargar definiciones
+* `/skills enable` — Habilitar
+* `/skills disable` — Deshabilitar
+
+**Desde la terminal:**
+```bash
+gemini skills list
+gemini skills install <repo_o_directorio>
+gemini skills link <directorio_local>
+gemini skills uninstall <nombre>
+```
+
+### PROBANDO LA SKILL
+
+```
+/skills reload
+```
+> Haz un code review de mi archivo game.js
+
+<Callout type="info">
+Las Skills ahorran tokens gracias a la "progressive disclosure": solo se carga el nombre y descripción inicialmente. El contenido completo se carga únicamente al activar la skill.
+</Callout>
+
+---
+
+### TIPS: SACARLE EL MÁXIMO A LAS SKILLS
+
+#### COMMITEA TUS SKILLS A GIT
+
+Las Skills en `.gemini/skills/` son parte de tu proyecto. Haz commit y reutilízalas en todos tus repositorios:
+
+```bash
+# Copiar skills a un nuevo proyecto
+cp -r proyecto-a/.gemini/skills/ proyecto-b/.gemini/skills/
+```
+
+O mejor aún, mantén un repositorio de skills personales e instálalas con `gemini skills install`.
+
+#### CONVIERTE TAREAS REPETITIVAS EN SKILLS
+
+Si haces algo más de una vez al día, conviértelo en una Skill. Ejemplos prácticos:
+
+* **`techdebt-hunter`** — Ejecutar al final de cada sesión para encontrar código duplicado y deuda técnica
+* **`test-writer`** — Genera tests unitarios siguiendo las convenciones de tu proyecto
+* **`pr-reviewer`** — Revisa PRs con checklist personalizado de tu equipo
+* **`migrator`** — Automatiza migraciones de base de datos con pasos específicos
+
+#### IDEAS DE SKILLS AVANZADAS
+
+* Un skill que sincronice contexto de Slack, GitHub Issues y docs en un solo resumen
+* Un skill de analytics que escriba queries, revise código y testee cambios
+* Un skill de seguridad que audite dependencias y escanee secrets

@@ -1,0 +1,67 @@
+import Callout from '../components/Callout.astro';
+
+MCP (Model Context Protocol) es un estándar abierto que permite a Gemini conectarse con tus datos y herramientas externas de forma segura. Piensa en ello como "plugins" universales para la IA.
+
+### ¿QUÉ ES UN SERVIDOR MCP?
+
+Un servidor MCP es una aplicación que expone herramientas y recursos al CLI a través del protocolo MCP. Soporta tres tipos de transporte:
+
+* **Stdio:** Comunicación por subproceso (lo más común)
+* **SSE:** Server-Sent Events
+* **HTTP:** Streaming HTTP
+
+### AGREGAR UN SERVIDOR MCP
+
+**Desde la terminal:**
+```bash
+gemini mcp add <nombre> <comando> [args...]
+```
+
+**Ejemplo con GitHub:**
+```bash
+gemini mcp add github npx -y @modelcontextprotocol/server-github \
+  -e GITHUB_PERSONAL_ACCESS_TOKEN=tu_token
+```
+
+**Opciones útiles:**
+* `-s, --scope` — `user` o `project`
+* `-t, --transport` — `stdio`, `sse` o `http`
+* `-e, --env` — Variables de entorno
+* `--trust` — Omitir confirmaciones (solo servidores controlados por ti)
+
+### GESTIONAR SERVIDORES
+
+```bash
+gemini mcp list              # Ver servidores configurados
+gemini mcp remove <nombre>   # Eliminar un servidor
+gemini mcp enable <nombre>   # Habilitar
+gemini mcp disable <nombre>  # Deshabilitar
+```
+
+### CONFIGURACIÓN EN SETTINGS.JSON
+
+También puedes configurar servidores directamente en `settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "miServidor": {
+      "command": "python",
+      "args": ["-m", "mi_servidor_mcp"],
+      "env": { "API_KEY": "$MI_API_KEY" },
+      "timeout": 15000
+    }
+  }
+}
+```
+
+### USO EN EL CHAT
+
+* Las herramientas MCP aparecen junto a las built-in en `/tools`.
+* Usa `/mcp` dentro de una sesión para ver el estado de los servidores.
+* Para ejecutar una herramienta, describe la acción en lenguaje natural.
+* Los servidores MCP pueden exponer prompts como slash commands personalizados.
+
+<Callout type="info">
+Las variables de entorno sensibles (`*TOKEN*`, `*SECRET*`, `*KEY*`) son automáticamente redactadas por seguridad. Solo las variables configuradas explícitamente se pasan al servidor.
+</Callout>

@@ -1,0 +1,47 @@
+import Callout from '../components/Callout.astro';
+
+Ahora que estás dentro, ¡probemos lo básico!
+
+### CHAT BÁSICO
+
+Escribe cualquier pregunta o instrucción directamente en el prompt.
+
+*   *Intenta esto: Explica brevemente qué es la arquitectura MVC.*
+
+### COMANDOS DE BARRA (/)
+
+Gemini CLI tiene comandos especiales que empiezan con `/`. Estos son los más importantes:
+
+**Navegación y sesión:**
+*   `/help` — Ver ayuda completa
+*   `/clear` — Limpiar la pantalla (o `Ctrl+L`)
+*   `/quit` o `/exit` — Salir de Gemini CLI
+*   `/stats` — Ver estadísticas de la sesión (tokens, modelo, herramientas)
+
+**Contexto y memoria:**
+*   `/memory show` — Ver el contexto cargado desde archivos GEMINI.md
+*   `/memory add <texto>` — Agregar texto al archivo GEMINI.md global
+*   `/memory refresh` — Recargar archivos de contexto
+*   `/compress` — Comprimir el historial del chat en un resumen
+
+**Modelo y configuración:**
+*   `/model` — Ver o cambiar el modelo activo
+*   `/settings` — Abrir el editor interactivo de configuración
+*   `/theme` — Cambiar el tema visual
+*   `/tools` — Ver herramientas disponibles
+
+**Historial y control:**
+*   `/chat save <tag>` — Guardar un checkpoint de la conversación
+*   `/chat resume <tag>` — Reanudar desde un checkpoint
+*   `/rewind` — Retroceder en el historial (o `Esc Esc`)
+*   `/restore` — Restaurar archivos al estado previo a una herramienta
+*   `/plan` — Activar Plan Mode (solo lectura, planifica sin ejecutar)
+
+**Extensiones y skills:**
+*   `/extensions` — Gestionar extensiones
+*   `/skills` — Gestionar Agent Skills
+*   `/mcp` — Ver estado de servidores MCP
+
+<Callout type="info">
+**Tarea práctica:** Escribe `/help` para ver la lista completa de comandos disponibles.
+</Callout>

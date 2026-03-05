@@ -1,0 +1,37 @@
+import Callout from '../components/Callout.astro';
+
+Antes de explorar las integraciones avanzadas con MCP, vamos a poner en práctica todo lo aprendido con un proyecto completo y divertido.
+
+### DESCRIPCIÓN DEL PROYECTO
+Crearás un juego de navegador inspirado en el clásico juego del dinosaurio de Chrome, pero con un giro único: un desarrollador que salta sobre "bugs" de software en lugar de cactus.
+
+### CARACTERÍSTICAS DEL JUEGO
+* **Motor del juego:** HTML5 Canvas + JavaScript vanilla.
+* **Obstáculos:** Diferentes tipos de bugs (syntax errors, merge conflicts) con visuales únicos.
+* **Power-ups:** "Debug Tokens" que permiten ralentizar el juego o auto-fix.
+* **Sistema de puntuación:** Score actual, high score y racha de bugs evitados.
+* **Estilo retro:** Gráficos pixel art y efectos de sonido 8-bit.
+
+### CÓMO USAR GEMINI CLI PARA ESTE PROYECTO
+Este ejercicio es perfecto para demostrar el poder de Gemini CLI como asistente de desarrollo. Intenta este prompt detallado:
+
+> Actúa como un desarrollador senior de videojuegos web. Tu tarea es crear un juego completo y funcional llamado 'Bug Runner', inspirado en el Chrome Dino game.
+>
+> Requisitos Técnicos:
+> 1. Stack: HTML5 Canvas, CSS3 y Vanilla JavaScript (ES6+).
+> 2. Archivos: Genera `index.html`, `styles.css`, y `game.js`.
+> 3. Assets: NO uses imágenes externas. Usa métodos de canvas para dibujar sprites pixel-art o formas geométricas.
+>
+> Gameplay:
+> - Mecánica: Runner infinito con salto (barra espaciadora / tap).
+> - Obstáculos: 3 tipos de bugs con velocidades/patrones diferentes.
+> - Power-ups: 'Debug Token' que ralentiza el tiempo.
+> - Game Loop: Usa `requestAnimationFrame` para 60 FPS estables.
+
+### CRITERIOS DE ÉXITO
+Tu juego estará completo cuando:
+1. ✓ El personaje salte suavemente con física realista.
+2. ✓ Los obstáculos aparezcan aleatoriamente y se muevan.
+3. ✓ Las colisiones se detecten correctamente.
+4. ✓ El score aumente y se guarde el high score.
+5. ✓ Funcione tanto en móvil como en desktop.

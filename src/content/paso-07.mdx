@@ -1,0 +1,192 @@
+import Callout from '../components/Callout.astro';
+
+Gemini CLI no solo lee, también puede ayudarte a organizar tu espacio de trabajo. Vamos a simular una carpeta desordenada y pedirle que la organice.
+
+### PREPARACIÓN
+Abre una nueva terminal y crea un desorden simulado:
+```bash
+mkdir desorden
+cd desorden
+touch foto1.jpg foto2.png notas.txt script.py data.json todo.md config.yml
+cd ..
+```
+
+### LA TAREA
+Entra en la carpeta desorden con Gemini CLI (o navega hasta ella).
+**Prompt:**
+> Estoy en la carpeta 'desorden'. Mira los archivos que hay y organízalos en subcarpetas lógicas (ej. Imágenes, Documentos, Código). Muévelos automáticamente.
+
+### ACCIÓN
+Gemini analizará los archivos (usando herramientas como `list_directory`) y propondrá un plan:
+* Mover .jpg, .png a Imágenes/
+* Mover .txt, .md a Documentos/
+* Mover .py, .json, .yml a Código/ o Config/
+
+Te pedirá confirmación para ejecutar los comandos `run_shell_command` (como `mv ...`). Acepta y observa cómo tu carpeta queda limpia en segundos.
+
+---
+
+### PLAN MODE: PLANIFICAR ANTES DE EJECUTAR
+
+Cuando la tarea es compleja o riesgosa, puedes usar **Plan Mode**: un entorno de solo lectura donde Gemini investiga tu proyecto y diseña un plan de implementación **sin modificar ningún archivo**.
+
+#### ¿PARA QUÉ SIRVE?
+
+* Investigar el codebase antes de hacer cambios
+* Evaluar alternativas y trade-offs
+* Crear un plan de implementación detallado en Markdown
+* Revisar y aprobar la estrategia antes de que se ejecute
+
+#### CÓMO ACTIVARLO
+
+Hay varias formas de entrar en Plan Mode:
+
+* **Desde el chat:** escribe `/plan` o simplemente pide "planifica cómo..."
+* **Con `Shift+Tab`:** cicla entre modos de aprobación (incluido Plan)
+* **Desde la terminal:** `gemini --approval-mode=plan`
+* **En settings.json:**
+  ```json
+  { "experimental": { "plan": true } }
+  ```
+
+#### FLUJO DE TRABAJO
+
+1. **Investigación:** Describes tu objetivo. Gemini explora el código en modo solo lectura.
+2. **Diseño:** El agente hace preguntas clarificadoras y presenta opciones.
+3. **Plan:** Genera un plan detallado en Markdown dentro del directorio de planes.
+4. **Revisión:** Apruebas para proceder, iteras con feedback, o cancelas con `Esc`.
+
+#### HERRAMIENTAS DISPONIBLES EN PLAN MODE
+
+Gemini puede **leer** pero no **escribir**:
+
+* Lectura de archivos, directorios y búsqueda (`read_file`, `glob`, `grep_search`)
+* Búsqueda web (`google_web_search`)
+* Sub-agentes de investigación
+* Herramientas MCP de solo lectura
+* Escritura **únicamente** de archivos `.md` en el directorio de planes
+
+#### ROUTING AUTOMÁTICO DE MODELOS
+
+Cuando usas selección automática de modelo, Plan Mode es inteligente:
+* **Fase de planificación:** usa el modelo Pro (mayor razonamiento)
+* **Fase de implementación:** cambia a Flash (más rápido) tras aprobar el plan
+
+#### EJERCICIO PRÁCTICO
+
+Prueba Plan Mode con un escenario real:
+
+> /plan
+
+> Planifica cómo agregarías tests unitarios al archivo game.js del Capstone Project. Analiza las funciones existentes y propón qué framework usar y qué casos de prueba cubrir.
+
+Revisa el plan generado. Si te convence, aprueba y Gemini lo ejecutará. Si no, presiona `Esc` para cancelar sin que se haya tocado un solo archivo.
+
+<Callout type="tip">
+Plan Mode es ideal para tareas que involucran múltiples archivos o decisiones arquitectónicas. Te permite alinear la estrategia antes de que el agente haga cambios.
+</Callout>
+
+#### TIPS DE USO ESTRATÉGICO
+
+* **Empieza siempre en Plan Mode** para tareas complejas. Invierte tu energía en el plan para que la implementación salga en un solo intento.
+* **Si algo sale mal, vuelve a Plan Mode.** No sigas empujando con errores acumulados — re-planifica.
+* **Usa Plan Mode también para verificar**, no solo para construir. Pide que planifique cómo validar o testear lo que ya se implementó.
+* Puedes usar un enfoque de **doble agente**: genera el plan en una sesión y luego abre otra sesión para que lo revise como un ingeniero senior antes de ejecutar.
+
+---
+
+### SUBAGENTS: DELEGAR TAREAS A AGENTES ESPECIALIZADOS
+
+Los **subagents** son agentes especializados que operan dentro de tu sesión principal de Gemini CLI. Cada uno tiene su propio contexto, herramientas y sistema de instrucciones, sin contaminar la ventana de contexto principal.
+
+#### ¿POR QUÉ USARLOS?
+
+* **Contexto limpio:** Cada subagent tiene su propia ventana de contexto, manteniendo tu sesión principal enfocada.
+* **Especialización:** Puedes crear agentes expertos en seguridad, testing, documentación, etc.
+* **Más poder de cómputo:** Agrega "usa subagents" a cualquier petición para que Gemini delegue en paralelo.
+
+#### SUBAGENTS INTEGRADOS
+
+Gemini CLI incluye subagents listos para usar:
+
+| Subagent | Propósito |
+|----------|-----------|
+| `codebase_investigator` | Analiza codebases, mapea dependencias, reverse engineering |
+| `cli_help` | Experto en comandos y configuración de Gemini CLI |
+| `generalist_agent` | Rutea tareas al subagent especializado más adecuado |
+| `browser_agent` | (Experimental) Automatiza tareas en el navegador web |
+
+#### CREAR SUBAGENTS PERSONALIZADOS
+
+1. Habilita la funcionalidad en `settings.json`:
+```json
+{
+  "experimental": {
+    "enableAgents": true
+  }
+}
+```
+
+2. Crea un archivo Markdown en `.gemini/agents/` (proyecto) o `~/.gemini/agents/` (usuario):
+
+```markdown
+---
+name: security-auditor
+description: "Encuentra vulnerabilidades de seguridad en el código"
+tools:
+  - read_file
+  - grep_search
+model: gemini-2.5-pro
+temperature: 0.2
+max_turns: 10
+---
+Eres un auditor de seguridad experto. Analiza el código buscando:
+
+1. Inyecciones SQL y XSS
+2. Secrets hardcodeados
+3. Dependencias vulnerables
+4. Permisos excesivos
+```
+
+**Campos del frontmatter:**
+
+| Campo | Descripción |
+|-------|-------------|
+| `name` | Identificador único (minúsculas, guiones) |
+| `description` | Qué hace — guía al agente principal para delegarle tareas |
+| `tools` | Herramientas que puede usar (limita el alcance) |
+| `model` | Modelo específico (opcional) |
+| `temperature` | Creatividad 0.0–2.0 (opcional) |
+| `max_turns` | Límite de turnos (default: 15) |
+| `timeout_mins` | Timeout en minutos (default: 5) |
+
+#### EJERCICIO: CREAR UN SUBAGENT DE DOCUMENTACIÓN
+
+```bash
+mkdir -p .gemini/agents
+cat > .gemini/agents/doc-writer.md << 'EOF'
+---
+name: doc-writer
+description: "Genera documentación técnica para funciones y módulos"
+tools:
+  - read_file
+  - grep_search
+  - list_directory
+model: gemini-2.5-flash
+max_turns: 8
+---
+Eres un escritor técnico. Cuando te pidan documentar código:
+
+1. Lee el archivo completo para entender el contexto.
+2. Identifica funciones, clases y exports públicos.
+3. Genera JSDoc/TSDoc con descripción, parámetros y ejemplos.
+4. Incluye un README.md si se trata de un módulo completo.
+EOF
+```
+
+Luego pide:
+> Documenta todas las funciones del archivo game.js, usa subagents
+
+<Callout type="warning">
+Los subagents ejecutan herramientas sin pedir confirmación individual en cada paso. Ten cuidado al otorgarles herramientas como `run_shell_command` o `write_file` — limita sus tools al mínimo necesario.
+</Callout>

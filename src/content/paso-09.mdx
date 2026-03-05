@@ -1,0 +1,21 @@
+import Callout from '../components/Callout.astro';
+
+Gemini CLI viene equipado con "herramientas" (Tools) que le dan superpoderes más allá de generar texto. Dos de las más útiles son `google_web_search` y `web_fetch`.
+
+### BÚSQUEDA WEB
+¿Necesitas información actualizada que el modelo no tiene en su entrenamiento?
+Intenta esto:
+> Busca en internet el precio actual de la accion de Nvidia.
+
+Gemini usará la herramienta `google_web_search`, obtendrá resultados reales y te dará una respuesta fundamentada.
+
+### LEER URLS ESPECÍFICAS
+Si tienes un enlace a una documentación o artículo:
+Intenta esto:
+> Ingresa a https://en.wikipedia.org/wiki/Artificial_intelligence y dime de que trata
+
+La herramienta `web_fetch` descargará el contenido de la página para que Gemini pueda analizarlo, incluso si es muy largo.
+
+### VER TODAS LAS TOOLS
+Para ver qué herramientas tienes disponibles en tu sesión actual:
+`/tools`

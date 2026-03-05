@@ -1,0 +1,42 @@
+import Callout from '../components/Callout.astro';
+
+Las extensiones de Gemini CLI empaquetan prompts, servidores MCP, comandos personalizados, temas, hooks, sub-agentes y Agent Skills en un formato reutilizable.
+
+### INSTALAR UNA EXTENSIÓN
+
+```bash
+gemini extensions install <URL_del_repositorio>
+```
+
+**Ejemplo:**
+```bash
+gemini extensions install https://github.com/gemini-cli-extensions/workspace
+```
+
+### GESTIONAR EXTENSIONES
+
+**Desde la terminal:**
+```bash
+gemini extensions list       # Ver extensiones instaladas
+gemini extensions install    # Instalar nueva
+```
+
+**Desde una sesión interactiva:**
+* `/extensions list` — Listar extensiones
+* `/extensions enable` — Habilitar
+* `/extensions disable` — Deshabilitar
+
+### GALERÍA DE EXTENSIONES
+
+Puedes explorar extensiones disponibles en la [galería oficial](https://geminicli.com/extensions/) antes de instalarlas.
+
+### EJEMPLOS PRÁCTICOS
+
+* **Workspace:** Herramientas para gestión de proyectos multi-directorio.
+  ```bash
+  gemini extensions install https://github.com/gemini-cli-extensions/workspace
+  ```
+
+<Callout type="tip">
+Las extensiones pueden incluir sus propias Agent Skills, servidores MCP y comandos personalizados — todo empaquetado en un solo repositorio.
+</Callout>

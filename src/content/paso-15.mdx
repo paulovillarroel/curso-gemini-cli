@@ -1,0 +1,62 @@
+import Callout from '../components/Callout.astro';
+
+`settings.json` controla el comportamiento del CLI: modelos, UI, contexto, seguridad y más.
+
+### UBICACIÓN
+
+* **Usuario:** `~/.gemini/settings.json` — configuración global
+* **Proyecto:** `.gemini/settings.json` — configuración del proyecto (tiene prioridad)
+
+### EDITAR RÁPIDO
+
+Desde el CLI: ejecuta `/settings` para abrir el editor interactivo con todas las opciones organizadas por categorías.
+
+### CATEGORÍAS DE CONFIGURACIÓN
+
+| Categoría | Qué controla |
+|-----------|-------------|
+| **General** | Vim mode, modo de aprobación, auto-update |
+| **UI** | Tema, renderizado, footer, indicador de "thinking" |
+| **Model** | Selección de modelo, compresión de contexto, detección de loops |
+| **Context** | Descubrimiento de memoria, filtrado de archivos, `.geminiignore` |
+| **Tools** | Configuración de shell, truncado de output |
+| **Security** | YOLO mode, aprobación de herramientas, carpetas de confianza |
+| **Skills** | Habilitación de Agent Skills |
+
+### EJEMPLO DE CONFIGURACIÓN
+
+```json
+{
+  "model": {
+    "modelId": "gemini-2.5-flash"
+  },
+  "ui": {
+    "theme": "github-dark"
+  },
+  "context": {
+    "fileName": ["GEMINI.md", "CONTEXT.md"]
+  },
+  "tools": {
+    "autoAccept": false
+  }
+}
+```
+
+### CONFIGURACIÓN DE MODELOS
+
+Puedes cambiar el modelo activo de varias formas:
+* **En la sesión:** `/model set <nombre>`
+* **En settings.json:** `"model": { "modelId": "gemini-2.5-pro" }`
+* **Gestión interactiva:** `/model manage`
+
+### CARPETAS DE CONFIANZA
+
+Para evitar que Gemini CLI pida confirmación cada vez que accede a un directorio:
+
+```
+/permissions trust /ruta/a/mi/proyecto
+```
+
+<Callout type="info">
+Usa `/settings` para explorar todas las opciones disponibles. La configuración de proyecto (`.gemini/settings.json`) sobreescribe la configuración de usuario.
+</Callout>

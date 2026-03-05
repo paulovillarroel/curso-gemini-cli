@@ -1,0 +1,41 @@
+import Callout from '../components/Callout.astro';
+
+El primer paso es instalar la herramienta en tu sistema.
+
+### OPCIÓN 1: NPM (RECOMENDADO)
+
+```bash
+npm install -g @google/gemini-cli
+```
+
+### OPCIÓN 2: HOMEBREW (macOS/Linux)
+
+```bash
+brew install gemini-cli
+```
+
+### OPCIÓN 3: SIN INSTALAR (npx)
+
+Si solo quieres probar sin instalar globalmente:
+
+```bash
+npx @google/gemini-cli
+```
+
+### VERIFICAR INSTALACIÓN
+
+```bash
+gemini --version
+```
+
+### CANALES DE ACTUALIZACIÓN
+
+Gemini CLI ofrece tres canales de release:
+
+* **Stable** (recomendado): `npm install -g @google/gemini-cli@latest`
+* **Preview** (semanal, sin garantía): `npm install -g @google/gemini-cli@preview`
+* **Nightly** (diario, experimental): `npm install -g @google/gemini-cli@nightly`
+
+<Callout type="info">
+Si encuentras problemas de permisos en Linux/macOS, puedes necesitar usar `sudo` o configurar npm para instalar paquetes globales sin permisos de administrador.
+</Callout>

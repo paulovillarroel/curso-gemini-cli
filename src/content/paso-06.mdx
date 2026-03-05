@@ -1,0 +1,32 @@
+import Callout from '../components/Callout.astro';
+
+Una de las características más potentes es la capacidad de leer tus archivos locales. Usa el símbolo `@` para referenciar archivos o directorios.
+
+### EJERCICIO PRÁCTICO: ENCONTRAR UN BUG
+
+1. Crea un archivo de prueba en otra terminal (o usa uno existente):
+   ```bash
+   echo "function suma(a, b) { return a - b; }" > bug.js
+   ```
+   <Callout type="warning">
+   **Nota:** ¡Hemos introducido un bug intencional, restando en lugar de sumar!
+   </Callout>
+
+2. En Gemini CLI, pide que encuentre el error usando el contexto del archivo:
+   ```bash
+   Encuentra el error en este código: @bug.js
+   ```
+
+Gemini leerá el contenido de `bug.js`, analizará el código y te explicará que la función suma está restando.
+
+### REFERENCIAR DIRECTORIOS COMPLETOS
+
+También puedes referenciar carpetas enteras para resumir proyectos:
+
+```bash
+Resumen de este directorio: @.
+```
+
+<Callout type="info">
+El símbolo `@` es extremadamente útil cuando trabajas en proyectos grandes. Puedes referenciar múltiples archivos en un solo prompt.
+</Callout>

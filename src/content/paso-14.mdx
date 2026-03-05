@@ -1,0 +1,111 @@
+import Callout from '../components/Callout.astro';
+
+Los archivos `GEMINI.md` son tu memoria persistente: instrucciones que se envían automáticamente al modelo en cada sesión.
+
+### ORDEN DE CARGA
+
+Los archivos se cargan jerárquicamente:
+
+1. **Global:** `~/.gemini/GEMINI.md` — instrucciones por defecto para todos los proyectos
+2. **Proyecto:** `GEMINI.md` en la raíz del repo — contexto específico del proyecto
+3. **Just-in-time:** Archivos `GEMINI.md` en subdirectorios — se cargan automáticamente cuando el agente accede a archivos en esos directorios
+
+### MODULARIZACIÓN CON IMPORTS
+
+Puedes dividir archivos grandes usando la sintaxis `@archivo.md`:
+
+```markdown
+# Instrucciones del Proyecto
+@coding-style.md
+@naming-conventions.md
+@api-guidelines.md
+```
+
+Esto importa el contenido de cada archivo referenciado (rutas relativas o absolutas).
+
+### EJERCICIO PRÁCTICO
+
+1. Crea un contexto de proyecto:
+```bash
+cat > GEMINI.md << 'EOF'
+# Instrucciones del Proyecto
+- Responde en español y con tono conciso.
+- Prefiere ejemplos en TypeScript.
+- Sigue las convenciones de Airbnb para JavaScript.
+EOF
+```
+
+2. Refresca y valida:
+```
+/memory refresh
+/memory show
+```
+
+3. Agrega instrucciones rápidamente:
+```
+/memory add "Usa siempre comillas simples en strings"
+```
+
+### PERSONALIZAR EL NOMBRE DE ARCHIVO
+
+Puedes cambiar qué archivos de contexto se cargan editando `settings.json`:
+
+```json
+{
+  "context": {
+    "fileName": ["AGENTS.md", "CONTEXT.md", "GEMINI.md"]
+  }
+}
+```
+
+<Callout type="tip">
+A diferencia de las Skills (que se activan bajo demanda), el contenido de GEMINI.md se incluye **siempre** en el contexto. Mantenlo conciso para no desperdiciar tokens.
+</Callout>
+
+---
+
+### ESTRATEGIA: MEJORA ITERATIVA DEL GEMINI.MD
+
+Tu `GEMINI.md` es la herramienta más poderosa que tienes para mejorar la calidad de las respuestas. Trátalo como un documento vivo que evoluciona con cada sesión.
+
+#### EL PATRÓN DE AUTO-CORRECCIÓN
+
+Cada vez que corrijas al agente, termina con:
+
+> "Actualiza tu GEMINI.md para que no cometas ese error de nuevo."
+
+Gemini es sorprendentemente bueno escribiendo reglas para sí mismo. Con el tiempo, tu tasa de errores bajará notablemente.
+
+#### EDITA SIN PIEDAD
+
+No dejes que tu `GEMINI.md` crezca sin control. Revísalo periódicamente:
+
+* Elimina reglas que ya no aplican
+* Consolida instrucciones redundantes
+* Verifica que las reglas realmente mejoren los resultados
+* Itera hasta que la tasa de errores baje de forma medible
+
+#### DIRECTORIO DE NOTAS POR PROYECTO
+
+Una técnica avanzada: mantener un directorio de notas que el agente actualice después de cada tarea:
+
+```bash
+mkdir -p .gemini/notes
+```
+
+En tu `GEMINI.md`, apunta a las notas:
+
+```markdown
+# Contexto del Proyecto
+@.gemini/notes/arquitectura.md
+@.gemini/notes/decisiones.md
+@.gemini/notes/errores-conocidos.md
+```
+
+Pide al agente que actualice las notas relevantes al final de cada sesión:
+
+> Actualiza las notas del proyecto con lo que aprendiste en esta sesión.
+
+<Callout type="info">
+El `GEMINI.md` global (`~/.gemini/GEMINI.md`) aplica a **todos** tus proyectos. Úsalo para preferencias universales como idioma, estilo de código y convenciones que siempre sigues.
+</Callout>
